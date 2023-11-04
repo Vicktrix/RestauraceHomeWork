@@ -2,7 +2,6 @@ package com.restaurace.DishManager;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import static java.math.MathContext.DECIMAL32;
 
 public class Dish{
     private String title;
