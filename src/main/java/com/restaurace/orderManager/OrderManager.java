@@ -21,7 +21,7 @@ public class OrderManager{
         availableTables = IntStream.range(1,51).boxed().toList();
     }
     private static List<Order> orders = new ArrayList<>();
-    // copy of uor arders
+    // copy of our orders
     public static List<Order> getAllOrder() {
         return orders.stream().toList();
     }
@@ -32,6 +32,9 @@ public class OrderManager{
     public static void removeOrder(Order order) {
         orders.remove(order);
     }
+    public static List<Order> getOrdersFromFile(){
+        return readOrderFromFile();
+    }
     private static void saveOdredToFile(Order order) {
         try(PrintWriter toFile = new PrintWriter(new FileWriter(ordersFile, true))) {
             toFile.println(parseOrderToStrInFile(order));
@@ -39,7 +42,7 @@ public class OrderManager{
           System.out.println("Error in write File orders\n "+ex);
         }
     }
-    private static List<Order> readOrderFroFile(){
+    private static List<Order> readOrderFromFile(){
         List<Order> list = new ArrayList<>();
         try(Scanner sc = new Scanner(new File(ordersFile))) {
             int numOfLine = 1;
@@ -69,7 +72,8 @@ public class OrderManager{
         order.setDish(DishManager.getDishById(Integer.valueOf(sb[0])));
         order.setTable(Integer.valueOf(sb[1]));
         order.setPaid(Boolean.valueOf(sb[2]));
-        order.setFulfilmentTime(LocalDateTime.parse(sb[3]));
+        if(!sb[3].equals("null"))
+            order.setFulfilmentTime(LocalDateTime.parse(sb[3]));
         order.setOrderedTime(LocalDateTime.parse(sb[4]));
         } catch(Exception ex) {
             System.out.println("Wrong in parsing from file "+ordersFile+" to Order");

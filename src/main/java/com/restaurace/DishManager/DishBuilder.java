@@ -76,7 +76,7 @@ public class DishBuilder{
     }
     public static Dish PizzaPepperoni() {
         Dish dish = new Dish();
-        dish.setTitle("Pizza Grande");
+        dish.setTitle("Pizza Pepperoni");
         dish.setDescription("chees, tomatoes, pepperoni, mozzarela, onion, 30cm'");
         dish.setPreparationTime(16);
         dish.setPrice(BigDecimal.valueOf(150));
@@ -85,7 +85,7 @@ public class DishBuilder{
     }
     public static Dish PizzaVegan() {
         Dish dish = new Dish();
-        dish.setTitle("Pizza Grande");
+        dish.setTitle("Pizza Vegan");
         dish.setDescription("ananas, mushrooms, tomatoes, onion, 30cm'");
         dish.setPreparationTime(12);
         dish.setPrice(BigDecimal.valueOf(135));

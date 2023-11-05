@@ -1,6 +1,8 @@
 package com.restaurace.orderManager;
 
 import com.restaurace.DishManager.Dish;
+import com.restaurace.DishManager.DishManager;
+import com.restaurace.Menu;
 import java.time.LocalDateTime;
 
 public class Order{
@@ -15,10 +17,32 @@ public class Order{
         this.dish=dish;
         this.orderedTime = LocalDateTime.now();
     }
-
-    public Order(){
+    public Order(){    }
+    
+    public Order(int table, Menu menu) {
+        this.table=table;
+        this.dish=menuMap(menu);
+        this.orderedTime = LocalDateTime.now();
     }
-
+    
+    private Dish menuMap(Menu menu) {
+        return switch(menu) {
+            case BEER_LARGE_10 -> DishManager.getDishById(1);
+            case BEER_SMALL_10 -> DishManager.getDishById(2);
+            case BOLONSKE_SPAGETTI -> DishManager.getDishById(3);
+            case HRANOLKY -> DishManager.getDishById(4);
+            case KOFOLA_LARGE -> DishManager.getDishById(5);
+            case KOFOLA_SMALL -> DishManager.getDishById(6);
+            case KURECI_RIZEK -> DishManager.getDishById(7);
+            case PIZZA_GRANDE -> DishManager.getDishById(8);
+            case PIZZA_PEPPERONI -> DishManager.getDishById(9);
+            case PIZZA_VEGAN -> DishManager.getDishById(10);
+            case POLEVKA -> DishManager.getDishById(11);
+            case PSTRUH_NA_VINE -> DishManager.getDishById(12);
+            default -> DishManager.getDishById(13);
+        };
+    }
+    
     public void setTable(int table){
         this.table=table;
     }
