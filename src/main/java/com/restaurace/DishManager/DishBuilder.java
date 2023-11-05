@@ -23,7 +23,7 @@ public class DishBuilder{
     public static Dish KureciRizek() {
         Dish dish = new Dish();
         dish.setTitle("Kureci Rizek");
-        dish.setDescription("Kuřecí řízek obalovaný 150 g");
+        dish.setDescription("Kureci rizek obalovany 150 g");
         dish.setPreparationTime(35);
         dish.setPrice(BigDecimal.valueOf(150));
         dish.setImage(img(dish.getTitle()));
@@ -40,8 +40,8 @@ public class DishBuilder{
     }
     public static Dish Pstruh() {
         Dish dish = new Dish();
-        dish.setTitle("Pstruh na vine");
-        dish.setDescription("Pstruh na víně 200 g");
+        dish.setTitle("Pstruh Na Vine");
+        dish.setDescription("Pstruh na vine 200 g");
         dish.setPreparationTime(45);
         dish.setPrice(BigDecimal.valueOf(180));
         dish.setImage(img(dish.getTitle()));

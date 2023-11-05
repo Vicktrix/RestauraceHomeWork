@@ -9,6 +9,15 @@ public class Dish{
     private int preparationTime;
     private URL image;
     private String description;
+    private int id = 0;
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id=id;
+    }
 
     public URL getImage(){
         return image;
@@ -57,4 +66,10 @@ public class Dish{
         this.setPrice(BigDecimal.ZERO);
         this.setPreparationTime(1);
     }
+
+    @Override
+    public String toString(){
+        return title+", "+price+"Kc, preparationTime="+preparationTime+", description="+description+", id="+id;
+    }
+    
 }
