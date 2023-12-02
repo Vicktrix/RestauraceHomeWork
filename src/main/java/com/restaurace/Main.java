@@ -129,7 +129,8 @@ public class Main{
         System.out.println("\nSeznam jídel, která byla dnes objednána :\n");
         dishes.forEach(System.out::println);
 //Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku):
-        
+        RestaurantManager.showOrdersForTable(3);
+        RestaurantManager.showOrdersForTable(1);
 
     }
 }

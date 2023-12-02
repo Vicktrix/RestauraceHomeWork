@@ -6,8 +6,14 @@ import com.restaurace.DishManager.DishPreparationTimeException;
 import com.restaurace.orderManager.Order;
 import com.restaurace.orderManager.OrderManager;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RestaurantManager{
 
@@ -98,5 +104,34 @@ public class RestaurantManager{
         order11.setOrderedTime(LocalDateTime.now().minusMinutes(15));
         managedOrders = OrderManager.getAllOrder();
         return managedOrders;
+    }
+//Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku):
+    public static void showOrdersForTable(int table) {
+        List<Order> list=managedOrders.stream().filter(o -> o.getTable()==table).toList();
+        StringBuilder sb = new StringBuilder("\n\n** Objednávky pro stůl č.  "+table+" **\n" +
+            "****");
+        int numOfItem =1;
+        Map<Integer,Integer> collect=list.stream().collect(
+            Collectors.toMap(o -> o.getDish().getId(),o -> 1,(i1,i2) -> i1+i2));
+        for(Map.Entry<Integer,Integer> entry : collect.entrySet()) {
+            Dish dish = DishManager.getDishById(entry.getKey());
+            sb.append("\n").append(numOfItem++).append(". ")
+            .append(dish.getTitle())
+            .append(" ").append(entry.getValue()).append("x ("
+            +(dish.getPrice().multiply(BigDecimal.valueOf(entry.getValue()),MathContext.DECIMAL32))
+            +"Kč):\t");
+            Function<Order, String> mapper = o -> {
+                StringBuilder str = new StringBuilder("");
+                LocalDateTime orderedTime=o.getOrderedTime();
+                LocalDateTime fulfilmentTime=o.getFulfilmentTime();
+                Function<LocalDateTime, String> fun = l -> l==null? "null ":""+l.getHour()+":"+l.getMinute();
+            return str.append(fun.apply(orderedTime)).append(" - ").append(fun.apply(fulfilmentTime)).toString();
+            };
+            Supplier<Stream<Order>> sup = () -> list.stream().filter(o -> o.getDish().getId()==entry.getKey());
+            String paid = sup.get().allMatch(o -> o.isPaid())? " zaplaceno" : "";
+            String line=sup.get()
+                    .map(mapper).collect(Collectors.joining(", "))+paid;
+            System.out.println(sb.append(line));
+        }
     }
 }
