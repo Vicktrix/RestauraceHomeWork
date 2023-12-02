@@ -5,6 +5,8 @@ import com.restaurace.DishManager.DishManager;
 import com.restaurace.orderManager.Order;
 import com.restaurace.orderManager.OrderManager;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Map;
 
 public class Main{
@@ -75,7 +77,59 @@ public class Main{
         //Použij všechny připravené metody pro získání informací pro management — údaje vypisuj na obrazovku.
         OrderManager.getAllOrder().stream().filter(o -> o.getTable()==15).forEach(System.out::println);
         System.out.println("Total cost for table 15 = "+sum);
-        
+        restaurantManagerWorks();
     }
+    
+    public static void restaurantManagerWorks() {
+        System.out.println("\n\nBefore RestaurantManager start works : ");
+        System.out.println("\nAll orders from list : ");
+        OrderManager.getAllOrder().forEach(System.out::println);
+        System.out.println("\nAll orders from File : ");
+        OrderManager.getOrdersFromFile().forEach(System.out::println);
+        System.out.println("\nClear all orders and print again");
+        OrderManager.removeAllOrdersInList();
+        OrderManager.removeAllOrdersInFile();
+        System.out.println("\nAll orders from list after clear : ");
+        OrderManager.getAllOrder().forEach(System.out::println);
+        System.out.println("\nAll orders from File after clear : ");
+        OrderManager.getOrdersFromFile().forEach(System.out::println);
+//Zadani : Kolik objednávek je aktuálně rozpracovaných a nedokončených.
+        System.out.println("//Zadani : Kolik objednávek je aktuálně rozpracovaných a nedokončených.");
+        RestaurantManager.getAllManagedOrders();
+        List<Order> list = RestaurantManager.getDoneOrders();
+        int celkem=list.size();
+        System.out.println("\n Vyrizeno objednavek  - "+celkem+"\n");
+        list.forEach(System.out::println);
+        list = RestaurantManager.getNotDoneOrders();
+        celkem=list.size();
+        System.out.println("\n Ne vyrizeno objednavek  - "+celkem+"\n");
+        list.forEach(System.out::println);
+//Možnost seřadit objednávky podle času zadání.
+        System.out.println("\nAll orders : ");
+        OrderManager.getAllOrder().forEach(System.out::println);
+        System.out.println("\nAll orders after sorting by ordered time: ");
+        OrderManager.getAllOrder().stream().sorted(
+                (o1,o2) -> o1.getOrderedTime().compareTo(o2.getOrderedTime())).forEach(System.out::println);
+//Průměrnou dobu zpracování objednávek.
+// je to sčitani časovych period (fulfilmentTime - orderedTime) děleno na počet uvedenych objednavek
+        List<Order> listWithFulfilmentTime= RestaurantManager.getAllManagedOrders()
+                .stream().filter(o -> o.getFulfilmentTime()!=null).toList();
+        celkem=listWithFulfilmentTime.size();
+        System.out.println("//Průměrnou dobu zpracování objednávek.");
+        System.out.println("list size "+celkem+"\n we find next orders :\n");
+        long sum = listWithFulfilmentTime.stream()
+                .peek(System.out::println)
+                .mapToLong(o -> o.getOrderedTime().until(o.getFulfilmentTime(),ChronoUnit.MINUTES))
+                .peek(i -> System.out.println("waiting "+i+" minutes"))
+                .sum();
+        System.out.println("Average time - "+(sum/celkem));
+//Seznam jídel, která byla dnes objednána. Bez ohledu na to, kolikrát bylo dané jídlo objednáno.
+        List<Dish> dishes=RestaurantManager.getAllManagedOrders().stream()
+                .map(o -> DishManager.getDishById(o.getDish().getId())).toList();
+        System.out.println("\nSeznam jídel, která byla dnes objednána :\n");
+        dishes.forEach(System.out::println);
+//Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku):
+        
 
+    }
 }

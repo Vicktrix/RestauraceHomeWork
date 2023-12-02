@@ -39,7 +39,6 @@ public class Order{
             case PIZZA_VEGAN -> DishManager.getDishById(10);
             case POLEVKA -> DishManager.getDishById(11);
             case PSTRUH_NA_VINE -> DishManager.getDishById(12);
-            default -> DishManager.getDishById(13);
         };
     }
     
@@ -85,7 +84,8 @@ public class Order{
 
     @Override
     public String toString(){
-        return "Order{"+"table="+table+", dish="+dish+", orderedTime="+orderedTime
-                +", fulfilmentTime="+fulfilmentTime+", paid="+paid+'}';
+        String myFulfilmentTime = fulfilmentTime==null? "null":fulfilmentTime.getHour()+":"+fulfilmentTime.getMinute();
+        return "Order{"+"table="+table+", dish="+dish+", orderedTime = "+orderedTime.getHour()+":"+orderedTime.getMinute()
+                +", fulfilmentTime = "+myFulfilmentTime+", paid="+paid+'}';
     }
 }

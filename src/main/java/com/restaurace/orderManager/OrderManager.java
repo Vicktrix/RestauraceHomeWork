@@ -32,17 +32,16 @@ public class OrderManager{
     public static void removeOrder(Order order) {
         orders.remove(order);
     }
-    public static List<Order> getOrdersFromFile(){
-        return readOrderFromFile();
-    }
     private static void saveOdredToFile(Order order) {
         try(PrintWriter toFile = new PrintWriter(new FileWriter(ordersFile, true))) {
+//        try(PrintWriter toFile = new PrintWriter(new FileWriter(ordersFile, false))) {
             toFile.println(parseOrderToStrInFile(order));
         } catch(IOException ex) {
-          System.out.println("Error in write File orders\n "+ex);
+          System.err.println("Error in write File orders\n "+ex);
         }
     }
-    private static List<Order> readOrderFromFile(){
+//    private static List<Order> readOrderFromFile(){
+    public static List<Order> getOrdersFromFile(){
         List<Order> list = new ArrayList<>();
         try(Scanner sc = new Scanner(new File(ordersFile))) {
             int numOfLine = 1;
@@ -52,7 +51,7 @@ public class OrderManager{
                 list.add(order);
             }
         } catch(FileNotFoundException ex) {
-            System.out.println("Error in read File "+ordersFile+"\n "+ex);
+            System.err.println("Error in read File "+ordersFile+"\n "+ex);
         }
         return list;
     }
@@ -76,10 +75,19 @@ public class OrderManager{
             order.setFulfilmentTime(LocalDateTime.parse(sb[3]));
         order.setOrderedTime(LocalDateTime.parse(sb[4]));
         } catch(Exception ex) {
-            System.out.println("Wrong in parsing from file "+ordersFile+" to Order");
-            System.out.println("In line "+line);
+            System.err.println("Wrong in parsing from file "+ordersFile+" to Order");
+            System.err.println("In line "+line);
         }
         return order;
     }
-    
+    //      new functionality         --------
+    public static void removeAllOrdersInList(){
+        orders = new ArrayList<>();
+    }
+    public static void removeAllOrdersInFile() {
+        try(PrintWriter toFile = new PrintWriter(new FileWriter(ordersFile, false))) {
+        } catch(IOException ex) {
+          System.err.println("Error in write File orders\n "+ex);
+        }
+    }
 }

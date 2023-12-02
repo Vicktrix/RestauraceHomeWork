@@ -31,7 +31,6 @@ public class DishManager{
         myDishes.put(10,DishBuilder.PizzaVegan());
         myDishes.put(11,DishBuilder.Polevka());
         myDishes.put(12,DishBuilder.Pstruh());
-        myDishes.put(13,DishBuilder.WrongTimePreparationDish());
         myDishes.forEach((k,v) -> v.setId(k));
         myDishes.values().forEach(d -> writeToCookBook(d.getTitle(),"\nThere are Recept : \n\t"+d,false));
         id = myDishes.size();

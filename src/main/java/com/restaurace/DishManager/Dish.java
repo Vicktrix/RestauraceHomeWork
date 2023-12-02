@@ -1,13 +1,12 @@
 package com.restaurace.DishManager;
 
 import java.math.BigDecimal;
-import java.net.URL;
 
 public class Dish{
     private String title;
     private BigDecimal price;
     private int preparationTime;
-    private URL image;
+    private String image;
     private String description;
     private int id = 0;
 
@@ -19,11 +18,11 @@ public class Dish{
         this.id=id;
     }
 
-    public URL getImage(){
+    public String getImage(){
         return image;
     }
 
-    public void setImage(URL image){
+    public void setImage(String image){
         this.image=image;
     }
 
@@ -47,10 +46,10 @@ public class Dish{
         return preparationTime;
     }
 
-    public void setPreparationTime(int preparationTime){
+    public void setPreparationTime(int preparationTime) throws DishPreparationTimeException{
         this.preparationTime=preparationTime;
     //Doba přípravy musí být kladné číslo — systém nepovolí zadat záporné číslo či nulu.
-        if(preparationTime<=0) createDefaultDish();
+        if(preparationTime<=0) throw new DishPreparationTimeException("Preparation time can`t be less than zero!");
     }
 
     public String getDescription(){
@@ -60,13 +59,6 @@ public class Dish{
     public void setDescription(String description){
         this.description=description;
     }
-    private void createDefaultDish() {
-        this.setTitle("Nepovedene jidlo ("+this.title+")");
-        this.setDescription("Nepovedene jidlo ("+this.description+")");
-        this.setPrice(BigDecimal.ZERO);
-        this.setPreparationTime(1);
-    }
-
     @Override
     public String toString(){
         return title+", "+price+"Kc, preparationTime="+preparationTime+", description="+description+", id="+id;
