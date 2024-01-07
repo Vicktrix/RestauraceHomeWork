@@ -45,7 +45,7 @@ public class DishBuilder{
     }
     public static Dish Polevka() {
         Dish dish = new Dish();
-        dish.setTitle("Polevka ");
+        dish.setTitle("Polevka");
         dish.setDescription("Polevka zeleninova 0.3l");
         preparationTimeWrapException(dish,25);
         dish.setPrice(BigDecimal.valueOf(40));

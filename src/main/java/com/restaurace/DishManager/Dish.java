@@ -63,5 +63,5 @@ public class Dish{
     public String toString(){
         return title+", "+price+"Kc, preparationTime="+preparationTime+", description="+description+", id="+id;
     }
-    
+
 }

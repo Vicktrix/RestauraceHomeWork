@@ -29,6 +29,9 @@ public class OrderManager{
         saveOdredToFile(order);
         orders.add(order);
     }
+    public static void addOrder(List<Order> orders) {
+        orders.forEach(OrderManager::addOrder);
+    }
     public static void removeOrder(Order order) {
         orders.remove(order);
     }

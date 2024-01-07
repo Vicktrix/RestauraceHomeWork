@@ -46,6 +46,11 @@ public class DishManager{
         writeToCookBook(dish.getTitle(),"\nThere are Recept : \n\t"+dish,false);
         myDishes.put(id,dish);
     }
+    public static void addNewDishTest(Dish dish){
+        dish.setId(++id);
+//        writeToCookBook(dish.getTitle(),"\nThere are Recept : \n\t"+dish,false);
+        myDishes.put(id,dish);
+    }
     public static void removeDish(Dish dish){
         writeToCookBook(dish.getTitle(),"DELETE",false);
         myDishes.remove(dish.getId());
