@@ -75,7 +75,8 @@ public class Main{
         //Použij všechny připravené metody pro získání informací pro management — údaje vypisuj na obrazovku.
         OrderManager.getAllOrder().stream().filter(o -> o.getTable()==15).forEach(System.out::println);
         System.out.println("Total cost for table 15 = "+sum);
-//        RestaurantManager restaurantManager=new RestaurantManager(OrderManager.getAllOrder());
-//        restaurantManager.listOfOrdersforTableInRequiredFormat(4);
+        RestaurantManager restaurantManager=new RestaurantManager(OrderManager.getAllOrder());
+        String listOfOrdersforTableInRequiredFormat=restaurantManager.listOfOrdersforTableInRequiredFormat(4);
+        System.out.println("\n "+listOfOrdersforTableInRequiredFormat);
     }
 }
